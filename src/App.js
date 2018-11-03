@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
+import { ModelProvider } from './providers'
 import { 
   Sketchpad,
   Toolbar
@@ -17,10 +18,12 @@ Wrapper.displayName = 'AppWrapper'
 class App extends Component {
   render() {
     return (
-      <Wrapper className="App">
-        <Toolbar />
-        <Sketchpad />
-      </Wrapper>
+      <ModelProvider>
+        <Wrapper className="App">
+          <Toolbar />
+          <Sketchpad />
+        </Wrapper>
+      </ModelProvider>
     );
   }
 }
