@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import { Map, fromJS } from 'immutable'
+import { fromJS, List } from 'immutable'
 import { ModelContext } from './contexts';
 
 export class ModelProvider extends Component {
@@ -8,7 +8,9 @@ export class ModelProvider extends Component {
       // 所有路径
       paths: [],
       // 当前路径工具
-      pathTool: null
+      pathTool: null,
+      // 正在编辑的路径
+      editingPath: null
     })
   }
 
@@ -17,10 +19,46 @@ export class ModelProvider extends Component {
    */
   addPath = (x, y) => {
     this.setState(prev => {
+      let data = prev.data.update('paths', paths => paths.push(fromJS({points: [[x, y, x, y, x, y]]})))
+      // 当前编辑的路径
+      data = data.set('editingPath', data.get('paths').size - 1)
       return {
-        data: prev.data.update('paths', paths => paths.push(Map({x, y})))
+        data
       }
     })
+  }
+
+  /**
+   * 在指定的路径上增加点
+   */
+  addPointInPath = (pathIndex, x, y) => {
+    this.setState(prev => {
+      let data = prev.data.updateIn(
+        ['paths', pathIndex, 'points'], 
+        points => points.push(List([x, y, x, y, x, y]))
+      )
+      return {
+        data
+      }
+    })
+  }
+
+  /**
+   * 获取路径指令字符串
+   */
+  getPathD = (pathIndex) => {
+    let path = this.state.data.getIn(['paths', pathIndex])
+
+    if (!path) return ''
+
+    return path.get('points').reduce((r, n, i, points) => {
+      let [px, py] = n.slice(2, 4)
+      // 起始点
+      if (i === 0) return `M ${px} ${py}`
+      let [x1, y1] = points.get(i - 1).slice(4, 6)
+      let [x2, y2] = n.slice(0, 2)
+      return `${r} C ${[x1, y1, x2, y2, px, py].join(' ')}`
+    }, '')
   }
 
   render () {
@@ -28,7 +66,7 @@ export class ModelProvider extends Component {
     return (
       <ModelContext.Provider value={{
         data,
-        addPath: this.addPath
+        API: this
       }} >
         {this.props.children}
       </ModelContext.Provider>

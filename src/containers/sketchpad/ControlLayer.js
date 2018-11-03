@@ -17,7 +17,15 @@ export default class ControlLayer extends Component {
 
   clickHandler = (e) => {
     let [x, y] = this.mapPoint(e.clientX, e.clientY)
-    this.context.addPath(x, y)
+    let { data, API } = this.context
+    let paths = data.get('paths')
+    let curPath = data.get('editingPath')
+
+    if (paths.size <= 0) {
+      API.addPath(x, y)
+    } else {
+      API.addPointInPath(curPath, x, y)
+    }
   }
 
   /**
@@ -33,10 +41,20 @@ export default class ControlLayer extends Component {
   }
 
   render () {
+    let { data, API } = this.context
+    let paths = data.get('paths')
+
     return (
       <Wrapper className="layer controllayer">
         <Svg svgRef={this.$svg} onClick={this.clickHandler}>
-
+        { paths.map((_, i) => (
+          <path key={i}
+            d={API.getPathD(i)}
+            strokeWidth={1}
+            stroke="steelblue"
+            fill="none"
+          />
+        ))}
         </Svg>
       </Wrapper>
     )

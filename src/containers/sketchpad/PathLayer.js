@@ -9,16 +9,17 @@ export default class PathLayer extends Component {
   static contextType = ModelContext
 
   render () {
-    let paths = this.context.data.get('paths')
+    let { data, API } = this.context
+    let paths = data.get('paths')
 
     return (
       <Svg>
-        { paths.map((path, i) => (
-          <circle key={i}
-            cx={path.get('x')}
-            cy={path.get('y')}
-            r={10}
-            fill="red"
+        { paths.map((_, i) => (
+          <path key={i}
+            d={API.getPathD(i)}
+            strokeWidth={2}
+            stroke="red"
+            fill="none"
           />
         ))}
       </Svg>
