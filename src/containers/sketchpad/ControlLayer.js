@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { WIDTH, HEIGHT, LAYER_STYLE_SIZE } from './constants'
+import { LAYER_STYLE_SIZE } from './constants'
+import Svg from './Svg'
 
 const Wrapper = styled.div`
   position: relative;
@@ -16,9 +17,9 @@ export default class ControlLayer extends Component {
   render () {
     return (
       <Wrapper className="layer controllayer">
-        <svg width={WIDTH} height={HEIGHT} onClick={this.clickHandler}>
+        <Svg onClick={this.clickHandler}>
 
-        </svg>
+        </Svg>
       </Wrapper>
     )
   }
