@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { ModelContext } from '../../providers';
 import { LAYER_STYLE_SIZE } from './constants'
 import Svg, { transAxis } from './Svg'
+import Anchor from './Anchor'
 
 const Wrapper = styled.div`
   position: relative;
@@ -40,21 +41,48 @@ export default class ControlLayer extends Component {
     return transAxis(x, y)
   }
 
+  /**
+   * 渲染锚点
+   */
+  renderAnchors (anchors) {
+    return anchors.map(([x1, y1, px, py, x2, y2], i) => (
+      <Anchor key={i}
+        x={px}
+        y={py}
+        leftX={x1}
+        leftY={y1}
+        rightX={x2}
+        rightY={y2}
+      />
+    ))
+  }
+
+  /**
+   * 渲染路径
+   */
+  renderPaths (paths) {
+    let { API } = this.context
+    return paths.map((path, i) => (
+      <g key={i}>
+        <path
+          d={API.getPathD(i)}
+          strokeWidth={1}
+          stroke="darkblue"
+          fill="none"
+        />
+        { this.renderAnchors(path.get('points'))}
+      </g>
+    ))
+  }
+
   render () {
-    let { data, API } = this.context
+    let { data } = this.context
     let paths = data.get('paths')
 
     return (
       <Wrapper className="layer controllayer">
         <Svg svgRef={this.$svg} onClick={this.clickHandler}>
-        { paths.map((_, i) => (
-          <path key={i}
-            d={API.getPathD(i)}
-            strokeWidth={1}
-            stroke="steelblue"
-            fill="none"
-          />
-        ))}
+        { this.renderPaths(paths)}
         </Svg>
       </Wrapper>
     )
