@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   align-items: flex-start;
   padding: 5px;
   background-color: #F5F8FA;
+
+  .anchor-btn>span[icon] {
+    transform: scale(-1, 1);
+  }
 `
 Wrapper.displayName = 'ToolbarWrapper'
 
@@ -41,7 +45,14 @@ export class Toolbar extends Component {
             onClick={this.btnHandler}
           />
           <AnchorButton 
-            icon="pivot" 
+            icon="move" 
+            active={pathTool === TOOLS.MOVE} 
+            data-tool={TOOLS.MOVE}
+            onClick={this.btnHandler}
+          />
+          <AnchorButton 
+            className="anchor-btn"
+            icon="geolocation" 
             active={pathTool === TOOLS.ANCHOR}
             data-tool={TOOLS.ANCHOR}
             onClick={this.btnHandler}

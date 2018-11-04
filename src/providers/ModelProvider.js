@@ -7,7 +7,8 @@ import { ModelContext } from './contexts';
  */
 export const TOOLS = {
   PEN: 1,
-  ANCHOR: 2
+  ANCHOR: 2,
+  MOVE: 3
 }
 
 export class ModelProvider extends Component {
