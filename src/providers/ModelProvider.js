@@ -2,16 +2,34 @@ import React, { Component} from 'react'
 import { fromJS, List } from 'immutable'
 import { ModelContext } from './contexts';
 
+/**
+ * 工具
+ */
+export const TOOLS = {
+  PEN: 1,
+  ANCHOR: 2
+}
+
 export class ModelProvider extends Component {
   state = {
     data: fromJS({
       // 所有路径
       paths: [],
       // 当前路径工具
-      pathTool: null,
+      pathTool: TOOLS.PEN,
       // 正在编辑的路径
       editingPath: null
     })
+  }
+
+  /**
+   * 设置当前路径工具
+   * @param {number} tool - 路径工具
+   */
+  setPathTool (tool) {
+    this.setState(prev => ({
+      data: prev.data.set('pathTool', tool)
+    }))
   }
 
   /**
