@@ -35,7 +35,7 @@ export class ModelProvider extends Component {
   /**
    * 添加路径
    */
-  addPath = (x, y) => {
+  addPath (x, y) {
     this.setState(prev => {
       let data = prev.data.update('paths', paths => paths.push(fromJS({points: [[x, y, x, y, x, y]]})))
       // 当前编辑的路径
@@ -49,7 +49,7 @@ export class ModelProvider extends Component {
   /**
    * 在指定的路径上增加点
    */
-  addPointInPath = (pathIndex, x, y) => {
+  addPointInPath (pathIndex, x, y) {
     this.setState(prev => {
       let data = prev.data.updateIn(
         ['paths', pathIndex, 'points'], 
@@ -64,7 +64,7 @@ export class ModelProvider extends Component {
   /**
    * 获取路径指令字符串
    */
-  getPathD = (pathIndex) => {
+  getPathD (pathIndex) {
     let path = this.state.data.getIn(['paths', pathIndex])
 
     if (!path) return ''
