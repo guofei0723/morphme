@@ -58,8 +58,11 @@ export default class ControlLayer extends Component {
         rightY={y2}
         pathIndex={pathIndex}
         pointIndex={i}
+        // moveable={tool === TOOLS.ANCHOR}
+        showControl={tool === TOOLS.ANCHOR}
+        isFirst={i === 0}
+        isLast={i === anchors.size - 1}
         API={API}
-        moveable={tool === TOOLS.ANCHOR}
       />
     ))
   }

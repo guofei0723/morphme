@@ -97,6 +97,35 @@ export class ModelProvider extends Component {
     })
   }
 
+  /**
+   * 修改路径上锚点的控制点
+   * @param {number} pathIndex - 路径索引
+   * @param {number} pointIndex - 锚点索引
+   * @param {array} cd1 - 左侧控制点
+   * @param {array} cd2 - 右侧控制点
+   */
+  movePathPointControl (pathIndex, pointIndex, cd1, cd2) {
+    this.setState(prev => {
+      let [x1, y1] = cd1
+      let [x2, y2] = cd2
+
+      return {
+        data: prev.data.updateIn(
+          ['paths', pathIndex, 'points', pointIndex], 
+          point => point.map((v, i) => {
+            switch(i) {
+              case 0: return v + x1
+              case 1: return v + y1
+              case 4: return v + x2
+              case 5: return v + y2
+              default: return v
+            }
+          })
+        )
+      }
+    })
+  }
+
   render () {
     let { data } = this.state
     return (
