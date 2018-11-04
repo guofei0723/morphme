@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { ModelContext } from '../../providers';
+import { ModelContext, getImtbDatas, TOOLS } from '../../providers';
 import { LAYER_STYLE_SIZE } from './constants'
 import Svg, { transAxis } from './Svg'
 import Anchor from './Anchor'
@@ -19,13 +19,14 @@ export default class ControlLayer extends Component {
   clickHandler = (e) => {
     let [x, y] = this.mapPoint(e.clientX, e.clientY)
     let { data, API } = this.context
-    let paths = data.get('paths')
-    let curPath = data.get('editingPath')
+    let [paths, curPath, curTool] = getImtbDatas(data, 'paths', 'editingPath', 'pathTool')
 
-    if (paths.size <= 0) {
-      API.addPath(x, y)
-    } else {
-      API.addPointInPath(curPath, x, y)
+    if (curTool === TOOLS.PEN) {
+      if (paths.size <= 0) {
+        API.addPath(x, y)
+      } else {
+        API.addPointInPath(curPath, x, y)
+      }
     }
   }
 
@@ -44,7 +45,9 @@ export default class ControlLayer extends Component {
   /**
    * 渲染锚点
    */
-  renderAnchors (anchors) {
+  renderAnchors (anchors, pathIndex) {
+    let { API, data } = this.context
+    let tool = data.get('pathTool')
     return anchors.map(([x1, y1, px, py, x2, y2], i) => (
       <Anchor key={i}
         x={px}
@@ -53,6 +56,10 @@ export default class ControlLayer extends Component {
         leftY={y1}
         rightX={x2}
         rightY={y2}
+        pathIndex={pathIndex}
+        pointIndex={i}
+        API={API}
+        moveable={tool === TOOLS.ANCHOR}
       />
     ))
   }
@@ -70,7 +77,7 @@ export default class ControlLayer extends Component {
           stroke="darkblue"
           fill="none"
         />
-        { this.renderAnchors(path.get('points'))}
+        { this.renderAnchors(path.get('points'), i)}
       </g>
     ))
   }

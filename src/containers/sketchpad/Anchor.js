@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { DraggableCore } from 'react-draggable';
 
 
 const W = 6
@@ -33,23 +34,54 @@ export default class Anchor extends Component {
     /**
      * 右侧控制点的纵坐标
      */
-    rightY: PropTypes.number.isRequired
+    rightY: PropTypes.number.isRequired,
+    /**
+     * 路径索引
+     */
+    pathIndex: PropTypes.number.isRequired,
+    /**
+     * 路径上点的索引
+     */
+    pointIndex: PropTypes.number.isRequired,
+    /**
+     * 数据接口对象
+     */
+    API: PropTypes.object.isRequired,
+    /**
+     * 是否可以移动
+     */
+    moveable: PropTypes.bool
+  }
+
+  static defaultProps = {
+    moveable: false
+  }
+
+  moveHandler = (_, {deltaX: dx, deltaY: dy}) => {
+    let { pathIndex, pointIndex, API } = this.props
+
+    API.movePathPoint(pathIndex, pointIndex, dx, dy)
   }
 
   render () {
-    let {x, y} = this.props
+    let {x, y, moveable} = this.props
 
     return (
       <g>
-        <rect 
-          x={x - W / 2} 
-          y={y - H / 2} 
-          width={W} 
-          height={H} 
-          stroke="darkblue"
-          strokeWidth={1}
-          fill="white"
-        />
+        <DraggableCore
+          onDrag={this.moveHandler}
+          disabled={!moveable}
+        >
+          <rect 
+            x={x - W / 2} 
+            y={y - H / 2} 
+            width={W} 
+            height={H} 
+            stroke="darkblue"
+            strokeWidth={1}
+            fill="white"
+          />
+        </DraggableCore>
       </g>
     )
   }

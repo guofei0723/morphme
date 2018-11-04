@@ -79,6 +79,24 @@ export class ModelProvider extends Component {
     }, '')
   }
 
+  /**
+   * 移动路径上的点
+   * @param {number} pathIndex - 路径索引
+   * @param {number} pointIndex - 锚点索引
+   * @param {number} dx - 横坐标移动量
+   * @param {number} dy - 纵坐标移动量
+   */
+  movePathPoint (pathIndex, pointIndex, dx, dy) {
+    this.setState(prev => {
+      return {
+        data: prev.data.updateIn(
+          ['paths', pathIndex, 'points', pointIndex], 
+          point => point.map((v, i) => i % 2 === 0 ? v + dx : v + dy)
+        )
+      }
+    })
+  }
+
   render () {
     let { data } = this.state
     return (
