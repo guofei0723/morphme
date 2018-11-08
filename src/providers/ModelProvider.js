@@ -62,12 +62,7 @@ export class ModelProvider extends Component {
     })
   }
 
-  /**
-   * 获取路径指令字符串
-   */
-  getPathD (pathIndex) {
-    let path = this.state.data.getIn(['paths', pathIndex])
-
+  transPathD (path) {
     if (!path) return ''
 
     return path.get('points').reduce((r, n, i, points) => {
@@ -78,6 +73,15 @@ export class ModelProvider extends Component {
       let [x2, y2] = n.slice(0, 2)
       return `${r} C ${[x1, y1, x2, y2, px, py].join(' ')}`
     }, '')
+  }
+
+  /**
+   * 获取路径指令字符串
+   */
+  getPathD (pathIndex) {
+    let path = this.state.data.getIn(['paths', pathIndex])
+
+    return this.transPathD(path)
   }
 
   /**

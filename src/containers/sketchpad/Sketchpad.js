@@ -5,15 +5,27 @@ import PathLayer from './PathLayer'
 import ControlLayer from './ControlLayer'
 
 const Wrapper = styled.div`
-  flex: 1 0 500px;
-  background-color: #BFCCD6;
+  flex: 1 1 auto;
+  height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 `
-Wrapper.displayName = 'SketchpadWrapper'
+
+const LayerBox = styled.div`
+  flex: 1 0 440px;
+  background-color: #BFCCD6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+LayerBox.displayName = 'LayerBox'
 
 const Layers = styled.div`
   position: relative;
   background-color: white;
-  margin: 20px auto;
+  /* margin: 20px auto; */
   ${CONSTS.LAYER_STYLE_SIZE}
 
   .layer {
@@ -27,11 +39,13 @@ Layers.displayName = 'Layers'
 export class Sketchpad extends Component {
   render () {
     return (
-      <Wrapper className="sketchpad">
-        <Layers className="layers">
-          <PathLayer />
-          <ControlLayer />
-        </Layers>
+      <Wrapper>
+        <LayerBox className="sketchpad">
+          <Layers className="layers">
+            <PathLayer />
+            <ControlLayer />
+          </Layers>
+        </LayerBox>
       </Wrapper>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import { ModelProvider } from './providers'
 import { 
+  FrameList,
   Sketchpad,
   Toolbar
 } from './containers'
@@ -22,6 +23,7 @@ class App extends Component {
         <Wrapper className="App">
           <Toolbar />
           <Sketchpad />
+          <FrameList />
         </Wrapper>
       </ModelProvider>
     );
