@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ModelContext } from '../../providers'
-import Svg from './Svg'
+import Svg from '../Svg'
 
 /**
  * 展示实际路径内容的图层

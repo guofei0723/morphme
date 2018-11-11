@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { ModelContext, getImtbDatas, TOOLS } from '../../providers';
-import { LAYER_STYLE_SIZE } from './constants'
-import Svg, { transAxis } from './Svg'
+import { LAYER_STYLE_SIZE } from '../constants'
+import Svg, { transAxis } from '../Svg'
 import Anchor from './Anchor'
 
 const Wrapper = styled.div`

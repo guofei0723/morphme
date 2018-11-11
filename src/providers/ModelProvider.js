@@ -19,7 +19,9 @@ export class ModelProvider extends Component {
       // 当前路径工具
       pathTool: TOOLS.PEN,
       // 正在编辑的路径
-      editingPath: null
+      editingPath: null,
+      // 帧列表
+      frames: []
     })
   }
 

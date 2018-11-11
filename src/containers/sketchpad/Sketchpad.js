@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import * as CONSTS from './constants'
+import * as CONSTS from '../constants'
 import PathLayer from './PathLayer'
 import ControlLayer from './ControlLayer'
 
