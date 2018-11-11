@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ModelContext } from '../../providers'
 import Svg from '../Svg'
+import Path from '../Path'
 
 /**
  * 展示实际路径内容的图层
@@ -14,14 +15,7 @@ export default class PathLayer extends Component {
 
     return (
       <Svg>
-        { paths.map((_, i) => (
-          <path key={i}
-            d={API.getPathD(i)}
-            strokeWidth={2}
-            stroke="red"
-            fill="none"
-          />
-        ))}
+        <Path paths={paths} API={API} />
       </Svg>
     )
   }
