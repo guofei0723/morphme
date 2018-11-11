@@ -19,9 +19,10 @@ export default function Svg (props) {
 
   return (
     <svg 
-      {...restProps}
       width={WIDTH} 
       height={HEIGHT}
+      {...restProps}
+      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       ref={svgRef}
     >
       <g transform={`translate(${ox}, ${oy})`}>

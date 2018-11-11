@@ -133,6 +133,18 @@ export class ModelProvider extends Component {
     })
   }
 
+  /**
+   * 把当前内容记录为一帧
+   */
+  makeCurrentToFrame () {
+    this.setState(prev => {
+      let paths = prev.data.get('paths')
+      return {
+        data: prev.data.update('frames', frames => frames.push(paths))
+      }
+    })
+  }
+
   render () {
     let { data } = this.state
     return (
