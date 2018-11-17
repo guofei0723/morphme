@@ -36,6 +36,7 @@ export class FrameList extends Component {
   render () {
     let { data, API } = this.context
     let frames = data.get('frames')
+    let playingAnim = data.get('playingAnim')
 
     return (
       <Wrapper>
@@ -45,10 +46,12 @@ export class FrameList extends Component {
           </Thumb>
         ))}
         
-        <AnchorButton 
-          icon="plus" 
-          onClick={this.addNewFrame}
-        />
+        { playingAnim ? undefined : (
+          <AnchorButton 
+            icon="plus" 
+            onClick={this.addNewFrame}
+          />
+        )}
       </Wrapper>
     )
   }

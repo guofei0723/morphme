@@ -21,7 +21,27 @@ export class ModelProvider extends Component {
       // 正在编辑的路径
       editingPath: null,
       // 帧列表
-      frames: []
+      frames: [],
+      // 是否在播放动画
+      playingAnim: false
+    })
+  }
+
+  /**
+   * 播放动画
+   */
+  playAnim () {
+    this.setState({
+      data: this.state.data.set('playingAnim', true)
+    })
+  }
+
+  /**
+   * 停止动画
+   */
+  stopAnim () {
+    this.setState({
+      data: this.state.data.set('playingAnim', false)
     })
   }
 

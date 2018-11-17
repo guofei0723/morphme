@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import * as CONSTS from '../constants'
 import PathLayer from './PathLayer'
 import ControlLayer from './ControlLayer'
+import AnimLayer from './AnimLayer'
+import { ModelContext } from '../../providers'
 
 const Wrapper = styled.div`
   flex: 1 1 auto;
@@ -37,13 +39,23 @@ const Layers = styled.div`
 Layers.displayName = 'Layers'
 
 export class Sketchpad extends Component {
+  static contextType = ModelContext
+
   render () {
+    let { data } = this.context
+    let playingAnim = data.get('playingAnim')
     return (
       <Wrapper>
         <LayerBox className="sketchpad">
           <Layers className="layers">
-            <PathLayer />
-            <ControlLayer />
+            { playingAnim ? (
+              <AnimLayer />
+            ) : (
+              <React.Fragment>
+                <PathLayer />
+                <ControlLayer />
+              </React.Fragment>
+            )}
           </Layers>
         </LayerBox>
       </Wrapper>

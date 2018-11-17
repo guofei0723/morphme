@@ -4,7 +4,8 @@ import { ModelProvider } from './providers'
 import { 
   FrameList,
   Sketchpad,
-  Toolbar
+  Toolbar,
+  AnimBar
 } from './containers'
 
 const Wrapper = styled.div`
@@ -23,6 +24,7 @@ class App extends Component {
         <Wrapper className="App">
           <Toolbar />
           <Sketchpad />
+          <AnimBar />
           <FrameList />
         </Wrapper>
       </ModelProvider>
