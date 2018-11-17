@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { PATH_PROPERTY } from './constants'
 
 export default class Path extends Component {
   render () {
@@ -7,11 +8,10 @@ export default class Path extends Component {
     return paths.map((path, i) => (
       <path key={i}
         d={API.transPathD(path)}
-        strokeWidth={2}
-        stroke="red"
-        fill="none"
+        {...PATH_PROPERTY}
         {...pathProps}
       />
     ))
   }
 }
+
